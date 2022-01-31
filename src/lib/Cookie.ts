@@ -116,19 +116,19 @@ export class Cookie {
 
   static parse(cookieStr: string): Cookie {
     const cookieArr = cookieStr.split("; ").map((attr) => attr.split("="));
-    const cookieObj = Object.fromEntries(cookieArr);
+    const cookieObj: RawCookie = Object.fromEntries(cookieArr);
     const cookieAttrs = Object.keys(cookieObj);
     const cookie = new Cookie("", "");
     cookieAttrs.forEach((attr) => {
       switch (attr.toLowerCase()) {
         case "samesite":
-          cookie.setSameSite(cookieObj[attr]);
+          cookie.setSameSite(<SameSite>cookieObj[attr]);
           break;
         case "domain":
-          cookie.setDomain(cookieObj[attr]);
+          cookie.setDomain(String(cookieObj[attr]));
           break;
         case "path":
-          cookie.setPath(cookieObj[attr]);
+          cookie.setPath(String(cookieObj[attr]));
           break;
         case "httponly":
           cookie.setHttpOnly(true);
@@ -137,17 +137,21 @@ export class Cookie {
           cookie.setSecure(true);
           break;
         case "max-age":
-          cookie.setMaxAge(cookieObj[attr]);
+          cookie.setMaxAge(Number(cookieObj[attr]));
           break;
         case "expires":
-          cookie.setExpires(cookieObj[attr]);
+          cookie.setExpires(String(cookieObj[attr]));
           break;
         default:
           cookie.setName(attr);
-          cookie.setValue(cookieObj[attr]);
+          cookie.setValue(String(cookieObj[attr]));
       }
     });
 
     return cookie;
   }
+}
+
+interface RawCookie {
+  [attr: string]: string | undefined;
 }

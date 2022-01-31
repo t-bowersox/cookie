@@ -113,4 +113,41 @@ export class Cookie {
 
     return cookie;
   }
+
+  static parse(cookieStr: string): Cookie {
+    const cookieArr = cookieStr.split("; ").map((attr) => attr.split("="));
+    const cookieObj = Object.fromEntries(cookieArr);
+    const cookieAttrs = Object.keys(cookieObj);
+    const cookie = new Cookie("", "");
+    cookieAttrs.forEach((attr) => {
+      switch (attr.toLowerCase()) {
+        case "samesite":
+          cookie.setSameSite(cookieObj[attr]);
+          break;
+        case "domain":
+          cookie.setDomain(cookieObj[attr]);
+          break;
+        case "path":
+          cookie.setPath(cookieObj[attr]);
+          break;
+        case "httponly":
+          cookie.setHttpOnly(true);
+          break;
+        case "secure":
+          cookie.setSecure(true);
+          break;
+        case "max-age":
+          cookie.setMaxAge(cookieObj[attr]);
+          break;
+        case "expires":
+          cookie.setExpires(cookieObj[attr]);
+          break;
+        default:
+          cookie.setName(attr);
+          cookie.setValue(cookieObj[attr]);
+      }
+    });
+
+    return cookie;
+  }
 }

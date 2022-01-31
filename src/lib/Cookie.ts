@@ -118,7 +118,7 @@ export class Cookie {
     const cookieArr = cookieStr.split("; ").map((attr) => attr.split("="));
     const cookieObj: RawCookie = Object.fromEntries(cookieArr);
     const cookieAttrs = Object.keys(cookieObj);
-    const cookie = new Cookie("", "");
+    const cookie = new Cookie("", "").setHttpOnly(false).setSecure(false);
     cookieAttrs.forEach((attr) => {
       switch (attr.toLowerCase()) {
         case "samesite":

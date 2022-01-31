@@ -1,0 +1,23 @@
+{
+  "main": "dist/common/index.js",
+  "module": "dist/esm/index.js",
+  "exports": {
+    ".": {
+      "import": "./dist/esm/index.js",
+      "require": "./dist/common/index.js"
+    }
+  },
+  "scripts": {
+    "watch": "tsc --watch",
+    "build": "tsc && tsc --project config/common/tsconfig.json && npm run package:common && npm run package:esm",
+    "lint": "eslint src",
+    "format": "prettier --write src",
+    "test": "jest",
+    "test:watch": "jest --watch",
+    "package:common": "cp config/common/package.json dist/common/package.json",
+    "package:esm": "cp config/esm/package.json dist/esm/package.json"
+  },
+  "files": [
+    "dist"
+  ]
+}

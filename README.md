@@ -29,6 +29,9 @@ const cookie = new Cookie("id", "cookie-value")
 
 console.log(cookie.toString());
 // "id=cookie-value; SameSite=Strict; Domain=example.com; Path=/; HttpOnly; Secure; Max-Age=604800; Expires=Tue, 08 Feb 2022 04:59:59 GMT"
+
+// Use the string value with a ServerResponse object using setHeader()
+response.setHeader("Set-Cookie", cookie.toString());
 ```
 
 ### Parse a cookie

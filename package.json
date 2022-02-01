@@ -1,5 +1,5 @@
 {
-  "name": "cookie",
+  "name": "@t-bowersox/cookie",
   "description": "Create and parse cookies.",
   "version": "1.0.0",
   "repository": {
